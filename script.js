@@ -316,16 +316,157 @@ function generateUniqueTasks(classLevel, subject, topic, type, count, variantInd
     return shuffleArray(result);
 }
 
-// Всегда генерируем все математические операции
-function getOperationsForTopic(topic) {
-    return ['+', '-', '×', ':'];
+// Определение типа задач по теме
+function getTaskTypeForTopic(topic) {
+    const topicLower = topic.toLowerCase();
+    
+    // Геометрия - треугольники
+    if (topicLower.includes('треугольник') || topicLower.includes('угол') || topicLower.includes('равнобедрен') || topicLower.includes('равносторон')) {
+        return 'geometry_triangles';
+    }
+    
+    // Геометрия - четырёхугольники
+    if (topicLower.includes('четырёхугольник') || topicLower.includes('квадрат') || topicLower.includes('прямоугольник') || topicLower.includes('параллелограмм') || topicLower.includes('ромб') || topicLower.includes('трапец')) {
+        return 'geometry_quads';
+    }
+    
+    // Геометрия - площадь
+    if (topicLower.includes('площадь') || topicLower.includes('периметр')) {
+        return 'geometry_area';
+    }
+    
+    // Алгебра - уравнения
+    if (topicLower.includes('уравнен') || topicLower.includes('неравенств')) {
+        return 'algebra_equations';
+    }
+    
+    // Алгебра - функции
+    if (topicLower.includes('функц') || topicLower.includes('график')) {
+        return 'algebra_functions';
+    }
+    
+    // Алгебра - степени
+    if (topicLower.includes('степен') || topicLower.includes('корен') || topicLower.includes('квадратн')) {
+        return 'algebra_powers';
+    }
+    
+    // Физика
+    if (topicLower.includes('скорост') || topicLower.includes('путь') || topicLower.includes('время') || topicLower.includes('сила') || topicLower.includes('масс') || topicLower.includes('энерг')) {
+        return 'physics';
+    }
+    
+    // По умолчанию - базовые операции
+    return 'basic';
 }
 
-// Генерация универсальных заданий (генерирует уникальные задания с разными числами)
-function generateUniversalTasks(topic, type, count) {
-    // Генерируем задания динамически с разными числами
+// Генерация задач по геометрии (треугольники)
+function generateGeometryTriangleTasks(topic, type, count) {
     const tasks = [];
-    const operations = getOperationsForTopic(topic);
+    
+    for (let i = 0; i < count; i++) {
+        // Генерируем задачи про треугольники
+        const angle1 = Math.floor(Math.random() * 60) + 30; // 30-90
+        const isIsosceles = Math.random() > 0.5;
+        
+        let question, answer;
+        
+        if (isIsosceles) {
+            // Равнобедренный треугольник - углы при основании равны
+            const baseAngle = Math.floor(Math.random() * 40) + 20; // 20-60
+            const vertexAngle = 180 - 2 * baseAngle;
+            
+            if (Math.random() > 0.5) {
+                question = `В равнобедренном треугольнике угол при вершине равен ${vertexAngle}°. Чему равны углы при основании?`;
+                answer = `По ${baseAngle}° каждый`;
+            } else {
+                question = `В равнобедренном треугольнике угол при основании равен ${baseAngle}°. Чему равен угол при вершине?`;
+                answer = `${vertexAngle}°`;
+            }
+        } else {
+            // Произвольный треугольник
+            const angle2 = Math.floor(Math.random() * (180 - angle1 - 20)) + 10;
+            const angle3 = 180 - angle1 - angle2;
+            
+            if (Math.random() > 0.5) {
+                question = `В треугольнике два угла равны ${angle1}° и ${angle2}°. Чему равен третий угол?`;
+                answer = `${angle3}°`;
+            } else {
+                question = `Чему равен третий угол треугольника, если сумма двух других ${angle1 + angle2}°?`;
+                answer = `${180 - (angle1 + angle2)}°`;
+            }
+        }
+        
+        if (type === 'test') {
+            const options = [
+                answer,
+                `${Math.floor(Math.random() * 30 + 10)}°`,
+                `${Math.floor(Math.random() * 30 + 50)}°`,
+                `${Math.floor(Math.random() * 30 + 80)}°`
+            ];
+            tasks.push({
+                text: `${i + 1}. ${question}`,
+                answer: answer,
+                options: shuffleArray(options)
+            });
+        } else {
+            tasks.push({
+                text: `${i + 1}. ${question}`,
+                answer: answer
+            });
+        }
+    }
+    
+    return tasks;
+}
+
+// Генерация задач по алгебре (уравнения)
+function generateAlgebraTasks(topic, type, count) {
+    const tasks = [];
+    
+    for (let i = 0; i < count; i++) {
+        // Генерируем простые линейные уравнения
+        const x = Math.floor(Math.random() * 20) + 1;
+        const a = Math.floor(Math.random() * 9) + 2;
+        const b = Math.floor(Math.random() * 20) + 1;
+        const c = a * x + b;
+        
+        let question, answer;
+        
+        if (Math.random() > 0.5) {
+            question = `Решите уравнение: ${a}x + ${b} = ${c}`;
+            answer = `x = ${x}`;
+        } else {
+            question = `Найдите x: ${a}x = ${c - b}`;
+            answer = `x = ${x}`;
+        }
+        
+        if (type === 'test') {
+            const options = [
+                `x = ${x}`,
+                `x = ${x + Math.floor(Math.random() * 5 + 1)}`,
+                `x = ${Math.max(1, x - Math.floor(Math.random() * 5 + 1))}`,
+                `x = ${Math.floor(Math.random() * 10 + 5)}`
+            ];
+            tasks.push({
+                text: `${i + 1}. ${question}`,
+                answer: answer,
+                options: shuffleArray(options)
+            });
+        } else {
+            tasks.push({
+                text: `${i + 1}. ${question}`,
+                answer: answer
+            });
+        }
+    }
+    
+    return tasks;
+}
+
+// Генерация базовых математических задач
+function generateBasicTasks(topic, type, count) {
+    const tasks = [];
+    const operations = ['+', '-', '×', ':'];
     
     for (let i = 0; i < count; i++) {
         const op = operations[Math.floor(Math.random() * operations.length)];
@@ -357,7 +498,6 @@ function generateUniversalTasks(topic, type, count) {
                 break;
         }
         
-        // Создаём неправильные ответы
         const wrongAnswers = [answer + Math.floor(Math.random() * 5) + 1, 
                             answer - Math.floor(Math.random() * 5) - 1,
                             answer + Math.floor(Math.random() * 3) + 3];
@@ -379,6 +519,20 @@ function generateUniversalTasks(topic, type, count) {
     }
     
     return tasks;
+}
+
+// Основная функция генерации заданий
+function generateUniversalTasks(topic, type, count) {
+    const taskType = getTaskTypeForTopic(topic);
+    
+    switch(taskType) {
+        case 'geometry_triangles':
+            return generateGeometryTriangleTasks(topic, type, count);
+        case 'algebra_equations':
+            return generateAlgebraTasks(topic, type, count);
+        default:
+            return generateBasicTasks(topic, type, count);
+    }
 }
 
 // Перемешивание массива (Fisher-Yates)
