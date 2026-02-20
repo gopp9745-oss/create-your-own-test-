@@ -307,37 +307,64 @@ footer {
 
 /* Print Styles */
 @media print {
+    * {
+        visibility: hidden;
+    }
+    
+    body, .container, .output-section, .output-section * {
+        visibility: visible;
+    }
+    
     body {
         background: white;
         padding: 0;
+        margin: 0;
     }
     
     .container {
         box-shadow: none;
         max-width: 100%;
+        margin: 0;
+        padding: 0;
     }
     
     .form-section,
     .output-header,
     footer {
-        display: none;
+        display: none !important;
     }
     
     .output-section {
+        display: block !important;
         box-shadow: none;
+        background: white;
     }
     
     .output-content {
-        padding: 0;
+        padding: 10mm;
+        min-height: auto;
+    }
+    
+    .worksheet {
+        page-break-after: always;
+    }
+    
+    .worksheet:last-child {
+        page-break-after: avoid;
     }
     
     .task-item {
         break-inside: avoid;
         border: 1px solid #ddd;
+        page-break-inside: avoid;
     }
     
     .answer-section {
         page-break-inside: avoid;
+    }
+    
+    .test-options {
+        display: block !important;
     }
 }
 
