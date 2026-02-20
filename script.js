@@ -813,7 +813,25 @@ function shuffleArray(array) {
     return arr;
 }
 
-// ==================== СОХРАНЕНИЕ ====================
+// ==================== БАЗА ДАННЫХ ИСПОЛЬЗОВАННЫХ ЗАДАНИЙ ====================
+// Загружаем использованные задания из localStorage
+let globalUsedTasks = new Set(JSON.parse(localStorage.getItem('usedTasks') || '[]'));
+
+// Сохраняем использованные задания в localStorage
+function saveUsedTasks() {
+    localStorage.setItem('usedTasks', JSON.stringify([...globalUsedTasks]));
+}
+
+// Очистить историю использованных заданий
+function clearUsedTasks() {
+    if (confirm('Очистить историю использованных заданий? Все задания снова будут доступны.')) {
+        globalUsedTasks = new Set();
+        saveUsedTasks();
+        alert('✅ История очищена!');
+    }
+}
+
+// ==================== СОХРАНЕНИЕ ВАРИАНТОВ ====================
 let savedWorksheets = JSON.parse(localStorage.getItem('savedWorksheets') || '[]');
 
 function saveCurrentWorksheet() {
@@ -857,6 +875,8 @@ function loadSavedWorksheet(id) {
 
 function renderSavedList() {
     const list = document.getElementById('savedList');
+    
+    if (!list) return;
     
     if (savedWorksheets.length === 0) {
         list.innerHTML = '<p class="empty-message">У вас пока нет сохранённых вариантов</p>';
@@ -928,9 +948,6 @@ classSelect.addEventListener('change', function() {
     subjectSelect.disabled = false;
 });
 
-// Глобальный счётчик использованных заданий
-let globalUsedTasks = new Set();
-
 generatorForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -943,8 +960,7 @@ generatorForm.addEventListener('submit', function(e) {
     const count = parseInt(taskCount.value);
     const variants = parseInt(variantCount.value);
     
-    // Сбрасываем использованные задания для новой генерации
-    globalUsedTasks = new Set();
+    // НЕ сбрасываем использованные задания - они накапливаются!
     
     let html = '';
     let allAnswers = [];
@@ -956,6 +972,9 @@ generatorForm.addEventListener('submit', function(e) {
         html += generateWorksheetHTML(selectedClass, subject, topic, section, name, type, tasks, v, variantLetter);
         allAnswers.push({ variant: v, letter: variantLetter, answers: tasks.map(t => t.answer) });
     }
+    
+    // Сохраняем использованные задания в localStorage
+    saveUsedTasks();
     
     outputContent.innerHTML = html;
     outputSection.style.display = 'block';
