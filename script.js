@@ -712,6 +712,16 @@ function generateUniqueTasksGlobal(classLevel, subject, topic, type, count, vari
         }
     }
     
+    // Если не хватает заданий - добавляем универсальные (даже если они были использованы ранее)
+    if (result.length < count) {
+        const universal = generateUniversalTasks(topic, type, count - result.length);
+        for (const task of universal) {
+            if (result.length >= count) break;
+            result.push(task);
+            globalUsedTasks.add(task.text);
+        }
+    }
+    
     return shuffleArray(result);
 }
 
@@ -960,7 +970,9 @@ generatorForm.addEventListener('submit', function(e) {
     const count = parseInt(taskCount.value);
     const variants = parseInt(variantCount.value);
     
-    // НЕ сбрасываем использованные задания - они накапливаются!
+    // Сбрасываем использованные задания для текущей генерации
+    // (чтобы все варианты в рамках одного запроса получили разные задания)
+    globalUsedTasks = new Set();
     
     let html = '';
     let allAnswers = [];
