@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор тестов и контрольных работ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Генератор тестов и контрольных работ</h1>
+            <p>Создавайте задания для учеников за считанные минуты</p>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <form id="generatorForm">
+                    <div class="form-group">
+                        <label for="classSelect">📚 Класс</label>
+                        <select id="classSelect" required>
+                            <option value="">Выберите класс</option>
+                            <option value="1">1 класс</option>
+                            <option value="2">2 класс</option>
+                            <option value="3">3 класс</option>
+                            <option value="4">4 класс</option>
+                            <option value="5">5 класс</option>
+                            <option value="6">6 класс</option>
+                            <option value="7">7 класс</option>
+                            <option value="8">8 класс</option>
+                            <option value="9">9 класс</option>
+                            <option value="10">10 класс</option>
+                            <option value="11">11 класс</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subjectSelect">🎓 Предмет</label>
+                        <select id="subjectSelect" required disabled>
+                            <option value="">Сначала выберите класс</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lessonTopic">📖 Тема урока</label>
+                        <input type="text" id="lessonTopic" placeholder="Например: Умножение дробей" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lessonName">📋 Название урока</label>
+                        <input type="text" id="lessonName" placeholder="Например: Умножение обыкновенных дробей" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="workType">📋 Тип работы</label>
+                        <select id="workType" required>
+                            <option value="">Выберите тип работы</option>
+                            <option value="test">Тест (с выбором ответа)</option>
+                            <option value="independent">Самостоятельная работа</option>
+                            <option value="control">Контрольная работа</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taskCount">Количество заданий</label>
+                        <input type="number" id="taskCount" min="1" max="20" value="5" required>
+                    </div>
+
+                    <button type="submit" class="btn-generate">🚀 Сгенерировать задания</button>
+                </form>
+            </div>
+
+            <div class="output-section" id="outputSection" style="display: none;">
+                <div class="output-header">
+                    <h2>Сгенерированные задания</h2>
+                    <div class="output-actions">
+                        <button id="editBtn" class="btn-secondary">✏️ Редактировать</button>
+                        <button id="printBtn" class="btn-secondary">🖨️ Печать</button>
+                        <button id="newBtn" class="btn-secondary">➕ Создать новую работу</button>
+                    </div>
+                </div>
+                <div id="outputContent" class="output-content" contenteditable="false">
+                    <!-- Generated content will appear here -->
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2026 Генератор тестов и контрольных работ</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

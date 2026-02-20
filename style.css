@@ -1,0 +1,377 @@
+/* Основные стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Main */
+main {
+    padding: 30px;
+}
+
+/* Form Section */
+.form-section {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+.form-group select:disabled {
+    background: #f0f0f0;
+    cursor: not-allowed;
+}
+
+/* Buttons */
+.btn-generate {
+    width: 100%;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-generate:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    background: #f0f0f0;
+    color: #333;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.btn-secondary:hover {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+/* Output Section */
+.output-section {
+    background: #f8f9fa;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.output-header {
+    background: #fff;
+    padding: 20px 30px;
+    border-bottom: 2px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.output-header h2 {
+    color: #333;
+    font-size: 1.3rem;
+}
+
+.output-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.output-content {
+    padding: 30px;
+    background: white;
+    min-height: 300px;
+    line-height: 1.8;
+}
+
+.output-content:focus {
+    outline: 2px solid #667eea;
+    border-radius: 5px;
+}
+
+/* Generated Content Styles */
+.worksheet {
+    max-width: 100%;
+}
+
+.worksheet-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #333;
+}
+
+.worksheet-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.worksheet-info {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+}
+
+.task-item {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.task-number {
+    font-weight: bold;
+    color: #667eea;
+    margin-right: 10px;
+}
+
+.task-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.task-text-full {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-left: 3px solid #667eea;
+    font-family: 'Georgia', serif;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+/* Test specific styles */
+.test-options {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.test-option {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.test-option input[type="radio"] {
+    margin-right: 10px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.test-option label {
+    cursor: pointer;
+    flex: 1;
+}
+
+/* Answer section for print */
+.answer-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px dashed #ccc;
+    page-break-before: avoid;
+}
+
+.answer-section h3 {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.answer-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.answer-item {
+    padding: 10px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+    
+    .container {
+        box-shadow: none;
+        max-width: 100%;
+    }
+    
+    .form-section,
+    .output-header,
+    footer {
+        display: none;
+    }
+    
+    .output-section {
+        box-shadow: none;
+    }
+    
+    .output-content {
+        padding: 0;
+    }
+    
+    .task-item {
+        break-inside: avoid;
+        border: 1px solid #ddd;
+    }
+    
+    .answer-section {
+        page-break-inside: avoid;
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 25px 15px;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    main {
+        padding: 15px;
+    }
+    
+    .form-section {
+        padding: 20px 15px;
+    }
+    
+    .output-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .output-actions {
+        justify-content: center;
+    }
+    
+    .btn-secondary {
+        margin: 5px;
+    }
+    
+    .worksheet-title {
+        font-size: 1.2rem;
+    }
+    
+    .answer-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
