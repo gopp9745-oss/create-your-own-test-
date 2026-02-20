@@ -683,6 +683,38 @@ function findTasksForTopic(classLevel, subject, topic, type) {
     return null;
 }
 
+// Генерация уникальных заданий для всех вариантов - без повторений ВООБЩЕ
+function generateUniqueTasksGlobal(classLevel, subject, topic, type, count, variantIndex = 0) {
+    let tasks = findTasksForTopic(classLevel, subject, topic, type);
+    
+    if (!tasks || tasks.length === 0) {
+        tasks = generateUniversalTasks(topic, type, count * 10);
+    }
+    
+    // Перемешиваем
+    let shuffled = shuffleArray([...tasks]);
+    
+    // Дополнительное перемешивание для разных вариантов
+    if (variantIndex > 0) {
+        for (let i = 0; i < variantIndex * 7; i++) {
+            shuffled = shuffleArray(shuffled);
+        }
+    }
+    
+    const result = [];
+    
+    // Берём задания которые ещё НЕ использовались вообще
+    for (const task of shuffled) {
+        if (result.length >= count) break;
+        if (!globalUsedTasks.has(task.text)) {
+            result.push(task);
+            globalUsedTasks.add(task.text); // Помечаем как использованное
+        }
+    }
+    
+    return shuffleArray(result);
+}
+
 // Генерация уникальных заданий - повторение только 1 раз если мало заданий
 function generateUniqueTasks(classLevel, subject, topic, type, count, variantIndex = 0) {
     let tasks = findTasksForTopic(classLevel, subject, topic, type);
@@ -896,7 +928,9 @@ classSelect.addEventListener('change', function() {
     subjectSelect.disabled = false;
 });
 
-// Генерация
+// Глобальный счётчик использованных заданий
+let globalUsedTasks = new Set();
+
 generatorForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -909,12 +943,15 @@ generatorForm.addEventListener('submit', function(e) {
     const count = parseInt(taskCount.value);
     const variants = parseInt(variantCount.value);
     
+    // Сбрасываем использованные задания для новой генерации
+    globalUsedTasks = new Set();
+    
     let html = '';
     let allAnswers = [];
     
     for (let v = 1; v <= variants; v++) {
         const variantLetter = getVariantLetter(v);
-        const tasks = generateUniqueTasks(selectedClass, subject, topic, type, count, v - 1);
+        const tasks = generateUniqueTasksGlobal(selectedClass, subject, topic, type, count, v - 1);
         
         html += generateWorksheetHTML(selectedClass, subject, topic, section, name, type, tasks, v, variantLetter);
         allAnswers.push({ variant: v, letter: variantLetter, answers: tasks.map(t => t.answer) });
