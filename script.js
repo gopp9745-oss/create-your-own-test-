@@ -956,19 +956,42 @@ generatorForm.addEventListener('submit', function(e) {
     const count = parseInt(taskCount.value);
     const variants = parseInt(variantCount.value);
     
-    // Сбрасываем использованные задания для текущей генерации
-    // (чтобы все варианты в рамках одного запроса получили разные задания)
-    globalUsedTasks = new Set();
+    // Находим все доступные задания
+    let allTasks = findTasksForTopic(selectedClass, subject, topic, type);
+    if (!allTasks || allTasks.length === 0) {
+        allTasks = generateUniversalTasks(topic, type, 50);
+    }
+    
+    // Перемешиваем все задания
+    let shuffledAll = shuffleArray([...allTasks]);
+    
+    // Если заданий меньше чем нужно на все варианты - добавляем универсальные
+    const totalNeeded = count * variants;
+    while (shuffledAll.length < totalNeeded) {
+        shuffledAll = shuffledAll.concat(generateUniversalTasks(topic, type, 10));
+    }
+    shuffledAll = shuffleArray(shuffledAll);
     
     let html = '';
     let allAnswers = [];
+    let usedInSession = new Set(); // Отслеживаем использованные в этой сессии
     
     for (let v = 1; v <= variants; v++) {
         const variantLetter = getVariantLetter(v);
-        const tasks = generateUniqueTasksGlobal(selectedClass, subject, topic, type, count, v - 1);
         
-        html += generateWorksheetHTML(selectedClass, subject, topic, section, name, type, tasks, v, variantLetter);
-        allAnswers.push({ variant: v, letter: variantLetter, answers: tasks.map(t => t.answer) });
+        // Выбираем задания которые ещё НЕ использовались в этой сессии
+        const availableTasks = shuffledAll.filter(t => !usedInSession.has(t.text));
+        
+        // Если мало - берём любые
+        const tasksForVariant = availableTasks.length >= count 
+            ? shuffleArray(availableTasks).slice(0, count)
+            : shuffleArray(shuffledAll).slice(0, count);
+        
+        // Добавляем в использованные
+        tasksForVariant.forEach(t => usedInSession.add(t.text));
+        
+        html += generateWorksheetHTML(selectedClass, subject, topic, section, name, type, tasksForVariant, v, variantLetter);
+        allAnswers.push({ variant: v, letter: variantLetter, answers: tasksForVariant.map(t => t.answer) });
     }
     
     outputContent.innerHTML = html;
