@@ -316,36 +316,8 @@ function generateUniqueTasks(classLevel, subject, topic, type, count, variantInd
     return shuffleArray(result);
 }
 
-// Определение операций по теме
+// Всегда генерируем все математические операции
 function getOperationsForTopic(topic) {
-    const topicLower = topic.toLowerCase();
-    const operations = [];
-    
-    // Проверяем тему на наличие ключевых слов для математических операций
-    if (topicLower.includes('умнож') || topicLower.includes('произвед')) {
-        operations.push('×');
-    }
-    if (topicLower.includes('дел') || topicLower.includes('частн')) {
-        operations.push(':');
-    }
-    if (topicLower.includes('слож') || topicLower.includes('сумм')) {
-        operations.push('+');
-    }
-    if (topicLower.includes('вычит') || topicLower.includes('разност')) {
-        operations.push('-');
-    }
-    
-    // Если найдены конкретные операции - используем их
-    if (operations.length > 0) {
-        return operations;
-    }
-    
-    // Если тема содержит "задач" или "пример" - генерируем все операции
-    if (topicLower.includes('задач') || topicLower.includes('пример') || topicLower.includes('все')) {
-        return ['+', '-', '×', ':'];
-    }
-    
-    // По умолчанию - все операции
     return ['+', '-', '×', ':'];
 }
 
