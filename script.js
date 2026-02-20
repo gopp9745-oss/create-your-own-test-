@@ -316,11 +316,38 @@ function generateUniqueTasks(classLevel, subject, topic, type, count, variantInd
     return shuffleArray(result);
 }
 
+// Определение операций по теме
+function getOperationsForTopic(topic) {
+    const topicLower = topic.toLowerCase();
+    const operations = [];
+    
+    // Проверяем тему на наличие ключевых слов
+    if (topicLower.includes('умнож') || topicLower.includes('произвед')) {
+        operations.push('×');
+    }
+    if (topicLower.includes('дел') || topicLower.includes('частн')) {
+        operations.push(':');
+    }
+    if (topicLower.includes('слож') || topicLower.includes('сумм')) {
+        operations.push('+');
+    }
+    if (topicLower.includes('вычит') || topicLower.includes('разност')) {
+        operations.push('-');
+    }
+    
+    // Если ничего не найдено - все операции
+    if (operations.length === 0) {
+        return ['+', '-', '×', ':'];
+    }
+    
+    return operations;
+}
+
 // Генерация универсальных заданий (генерирует уникальные задания с разными числами)
 function generateUniversalTasks(topic, type, count) {
     // Генерируем задания динамически с разными числами
     const tasks = [];
-    const operations = ['+', '-', '×', ':'];
+    const operations = getOperationsForTopic(topic);
     
     for (let i = 0; i < count; i++) {
         const op = operations[Math.floor(Math.random() * operations.length)];
