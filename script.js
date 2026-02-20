@@ -565,6 +565,7 @@ const lessonTopic = document.getElementById('lessonTopic');
 const lessonName = document.getElementById('lessonName');
 const workType = document.getElementById('workType');
 const taskCount = document.getElementById('taskCount');
+const variantCount = document.getElementById('variantCount');
 const generatorForm = document.getElementById('generatorForm');
 const outputSection = document.getElementById('outputSection');
 const outputContent = document.getElementById('outputContent');
@@ -591,7 +592,7 @@ classSelect.addEventListener('change', function() {
     subjectSelect.disabled = false;
 });
 
-// Генерация заданий
+// Генерация заданий - поддержка нескольких вариантов
 generatorForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -601,25 +602,42 @@ generatorForm.addEventListener('submit', function(e) {
     const name = lessonName.value;
     const type = workType.value;
     const count = parseInt(taskCount.value);
+    const variants = parseInt(variantCount.value);
     
-    // Генерируем задания с учётом темы
-    const tasks = generateTasks(subject, topic, selectedClass, type, count);
+    let html = '';
+    let allAnswers = [];
     
-    // Генерируем HTML
-    const html = generateWorksheet(selectedClass, subject, topic, name, type, tasks);
+    // Генерируем каждый вариант отдельно
+    for (let v = 1; v <= variants; v++) {
+        const variantLetter = getVariantLetter(v);
+        
+        // Генерируем задания с учётом темы (каждый вариант уникальный)
+        const tasks = generateTasks(subject, topic, selectedClass, type, count);
+        
+        // Генерируем HTML для одного варианта
+        html += generateWorksheet(selectedClass, subject, topic, name, type, tasks, v, variantLetter);
+        
+        // Сохраняем ответы для этого варианта
+        allAnswers.push({ variant: v, letter: variantLetter, answers: tasks.map(task => task.answer) });
+    }
     
     outputContent.innerHTML = html;
     outputSection.style.display = 'block';
     
-    // Сохраняем ответы
-    generatedAnswers = tasks.map(task => task.answer);
+    // Сохраняем все ответы
+    generatedAnswers = allAnswers;
     
     // Прокрутка к результату
     outputSection.scrollIntoView({ behavior: 'smooth' });
 });
 
+// Получение буквы варианта (А, Б, В, Г, Д...)
+function getVariantLetter(num) {
+    const letters = 'АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯ';
+    return letters[(num - 1) % letters.length];
+}
 // Генерация HTML для листа с заданиями
-function generateWorksheet(classLevel, subject, topic, name, type, tasks) {
+function generateWorksheet(classLevel, subject, topic, name, type, tasks, variantNum = 1, variantLetter = 'А') {
     const typeNames = {
         'test': 'Тест',
         'independent': 'Самостоятельная работа',
@@ -629,7 +647,7 @@ function generateWorksheet(classLevel, subject, topic, name, type, tasks) {
     let html = `
         <div class="worksheet">
             <div class="worksheet-header">
-                <div class="worksheet-title">${typeNames[type]}</div>
+                <div class="worksheet-title">${typeNames[type]} - Вариант ${variantLetter}</div>
                 <div class="worksheet-info"><strong>Предмет:</strong> ${subject}</div>
                 <div class="worksheet-info"><strong>Класс:</strong> ${classLevel}</div>
                 <div class="worksheet-info"><strong>Тема:</strong> ${topic}</div>
@@ -650,8 +668,8 @@ function generateWorksheet(classLevel, subject, topic, name, type, tasks) {
                 task.options.forEach((option, optIndex) => {
                     optionsHTML += `
                         <div class="test-option">
-                            <input type="radio" name="task${index}" id="task${index}_opt${optIndex}">
-                            <label for="task${index}_opt${optIndex}">${option}</label>
+                            <input type="radio" name="variant${variantLetter}_task${index}" id="variant${variantLetter}_task${index}_opt${optIndex}">
+                            <label for="variant${variantLetter}_task${index}_opt${optIndex}">${option}</label>
                         </div>
                     `;
                 });
@@ -678,13 +696,12 @@ function generateWorksheet(classLevel, subject, topic, name, type, tasks) {
     html += `
             </ul>
             <div class="answer-section">
-                <h3>Ответы (для учителя)</h3>
+                <h3>Ответы - Вариант ${variantLetter} (для учителя)</h3>
                 <ul class="answer-list">
     `;
     
-    generatedAnswers = tasks.map(task => task.answer);
-    generatedAnswers.forEach((answer, index) => {
-        html += `<li class="answer-item">${index + 1}. ${answer}</li>`;
+    tasks.forEach((task, index) => {
+        html += `<li class="answer-item">${index + 1}. ${task.answer}</li>`;
     });
     
     html += `
@@ -695,6 +712,7 @@ function generateWorksheet(classLevel, subject, topic, name, type, tasks) {
     
     return html;
 }
+
 
 // Режим редактирования
 let isEditing = false;
