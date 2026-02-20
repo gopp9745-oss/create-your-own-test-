@@ -1,745 +1,509 @@
-// ==================== БАЗА ДАННЫХ ====================
-const subjectsByClass = {
-    1: ['Математика', 'Русский язык', 'Литературное чтение', 'Окружающий мир'],
-    2: ['Математика', 'Русский язык', 'Литературное чтение', 'Окружающий мир'],
-    3: ['Математика', 'Русский язык', 'Литературное чтение', 'Окружающий мир'],
-    4: ['Математика', 'Русский язык', 'Литературное чтение', 'Окружающий мир'],
-    5: ['Математика', 'Русский язык', 'Литература', 'Английский язык', 'История', 'География', 'Биология'],
-    6: ['Математика', 'Русский язык', 'Литература', 'Английский язык', 'История', 'География', 'Биология', 'Обществознание'],
-    7: ['Алгебра', 'Геометрия', 'Русский язык', 'Литература', 'Английский язык', 'История', 'География', 'Биология', 'Физика'],
-    8: ['Алгебра', 'Геометрия', 'Русский язык', 'Литература', 'Английский язык', 'История', 'География', 'Биология', 'Физика', 'Химия'],
-    9: ['Алгебра', 'Геометрия', 'Русский язык', 'Литература', 'Английский язык', 'История', 'География', 'Биология', 'Физика', 'Химия'],
-    10: ['Алгебра', 'Геометрия', 'Русский язык', 'Литература', 'Английский язык', 'История', 'География', 'Биология', 'Физика', 'Химия'],
-    11: ['Алгебра', 'Геометрия', 'Русский язык', 'Литература', 'Английский язык', 'История', 'География', 'Биология', 'Физика', 'Химия']
-};
-
-// База заданий - БОЛЬШОЙ НАБОР для разных тем
-const taskDatabase = {
-    'Математика': {
-        'умножение и деление': {
-            test: [
-                { text: 'Вычислите: 125 × 8 =', answer: '1000', options: ['1000', '800', '100', '10000'] },
-                { text: 'Вычислите: 96 : 8 =', answer: '12', options: ['12', '14', '10', '8'] },
-                { text: 'Вычислите: 24 × 13 =', answer: '312', options: ['312', '292', '332', '272'] },
-                { text: 'Вычислите: 144 : 12 =', answer: '12', options: ['12', '14', '10', '11'] },
-                { text: 'Вычислите: 56 × 7 =', answer: '392', options: ['392', '382', '402', '372'] },
-                { text: 'Вычислите: 480 : 16 =', answer: '30', options: ['30', '28', '32', '26'] },
-                { text: 'Вычислите: 15 × 15 =', answer: '225', options: ['225', '215', '235', '205'] },
-                { text: 'Вычислите: 625 : 25 =', answer: '25', options: ['25', '23', '27', '21'] },
-                { text: 'Вычислите: 17 × 9 =', answer: '153', options: ['153', '143', '163', '133'] },
-                { text: 'Вычислите: 320 : 20 =', answer: '16', options: ['16', '14', '18', '12'] }
-            ],
-            independent: [
-                { text: 'Решите задачу: 6 тетрадей стоят 72 рубля. Сколько стоит 1 тетрадь?', answer: '12 рублей' },
-                { text: 'Вычислите: 123 × 4 =', answer: '492' },
-                { text: 'Вычислите: 555 : 5 =', answer: '111' },
-                { text: 'Решите задачу: 9 книг стоят 450 рублей. Сколько стоит 1 книга?', answer: '50 рублей' },
-                { text: 'Вычислите: 25 × 8 × 4 =', answer: '800' },
-                { text: 'Вычислите: 720 : 8 : 9 =', answer: '10' },
-                { text: 'Решите задачу: 7 пачек печенья весят 350 г. Сколько весит 1 пачка?', answer: '50 г' },
-                { text: 'Вычислите: 45 × 11 =', answer: '495' },
-                { text: 'Вычислите: 1000 : 125 =', answer: '8' },
-                { text: 'Решите задачу: 5 коробок карандашей стоят 200 рублей. Сколько стоит 1 коробка?', answer: '40 рублей' }
-            ],
-            control: [
-                { text: '1. Вычислите: 247 × 38 =', answer: '9386' },
-                { text: '2. Вычислите: 2856 : 8 =', answer: '357' },
-                { text: '3. Решите задачу: Длина прямоугольника 18 см, ширина в 3 раза меньше. Найдите периметр.', answer: '48 см' },
-                { text: '4. Вычислите: 25 × 4 × 7 × 5 =', answer: '3500' },
-                { text: '5. Решите задачу: 8 кг яблок стоят 560 рублей. Сколько стоят 5 кг яблок?', answer: '350 рублей' }
-            ]
-        },
-        'сложение и вычитание': {
-            test: [
-                { text: 'Вычислите: 456 + 378 =', answer: '834', options: ['834', '824', '844', '814'] },
-                { text: 'Вычислите: 1000 - 567 =', answer: '433', options: ['433', '423', '443', '453'] },
-                { text: 'Вычислите: 234 + 766 =', answer: '1000', options: ['1000', '990', '1010', '980'] },
-                { text: 'Вычислите: 854 - 376 =', answer: '478', options: ['478', '468', '488', '458'] },
-                { text: 'Вычислите: 127 + 348 + 215 =', answer: '690', options: ['690', '680', '700', '670'] }
-            ],
-            independent: [
-                { text: 'Вычислите: 345 + 287 =', answer: '632' },
-                { text: 'Вычислите: 800 - 456 =', answer: '344' },
-                { text: 'Решите задачу: В первом классе 28 учеников, во втором - на 15 больше. Сколько во втором?', answer: '43 ученика' },
-                { text: 'Вычислите: 156 + 244 + 300 =', answer: '700' },
-                { text: 'Вычислите: 1000 - 123 - 277 =', answer: '600' }
-            ],
-            control: [
-                { text: '1. Вычислите: 4567 + 3899 =', answer: '8466' },
-                { text: '2. Вычислите: 10000 - 4567 =', answer: '5433' },
-                { text: '3. Решите задачу: На трёх полках 150 книг. На первой 45, на второй 52. Сколько на третьей?', answer: '53 книги' },
-                { text: '4. Вычислите: 234 + 567 + 890 - 500 =', answer: '1191' }
-            ]
-        },
-        'дроби': {
-            test: [
-                { text: 'Запишите в виде дроби: три седьмых', answer: '3/7', options: ['3/7', '7/3', '3/10', '7/10'] },
-                { text: 'Сравните дроби: 3/5 и 4/5', answer: '3/5 < 4/5', options: ['3/5 < 4/5', '3/5 > 4/5', '3/5 = 4/5'] },
-                { text: 'Вычислите: 1/2 + 1/4 =', answer: '3/4', options: ['3/4', '2/6', '1/2', '4/6'] },
-                { text: 'Вычислите: 2/3 × 3/4 =', answer: '1/2', options: ['1/2', '5/12', '6/12', '1/4'] },
-                { text: 'Вычислите: 5/6 : 2/3 =', answer: '5/4 = 1¼', options: ['5/4 = 1¼', '10/18', '7/9', '15/12'] }
-            ],
-            independent: [
-                { text: 'Вычислите: 3/5 + 1/5 =', answer: '4/5' },
-                { text: 'Вычислите: 7/8 - 3/8 =', answer: '4/8 = 1/2' },
-                { text: 'Вычислите: 2/3 × 1/2 =', answer: '1/3' },
-                { text: 'Вычислите: 3/4 : 1/2 =', answer: '3/2 = 1½' }
-            ],
-            control: [
-                { text: '1. Вычислите: (1/2 + 1/3) × 6 =', answer: '5' },
-                { text: '2. Решите уравнение: x/4 = 3/8', answer: 'x = 3/2 = 1,5' },
-                { text: '3. Задача: Отрезали 2/5 ленты, что составляет 8 м. Какова длина всей ленты?', answer: '20 м' },
-                { text: '4. Вычислите: (3/4 + 1/4) × 8/2 =', answer: '4' }
-            ]
-        },
-        'уравнения': {
-            test: [
-                { text: 'Решите уравнение: x + 5 = 12', answer: 'x = 7', options: ['x = 7', 'x = 17', 'x = 5', 'x = 60'] },
-                { text: 'Решите уравнение: x × 3 = 15', answer: 'x = 5', options: ['x = 5', 'x = 18', 'x = 45', 'x = 12'] },
-                { text: 'Решите уравнение: x - 8 = 20', answer: 'x = 28', options: ['x = 28', 'x = 12', 'x = 38', 'x = 18'] },
-                { text: 'Решите уравнение: 2x = 18', answer: 'x = 9', options: ['x = 9', 'x = 16', 'x = 20', 'x = 36'] },
-                { text: 'Решите уравнение: x : 4 = 7', answer: 'x = 28', options: ['x = 28', 'x = 11', 'x = 3', 'x = 3,5'] }
-            ],
-            independent: [
-                { text: 'Решите уравнение: 2x + 7 = 15', answer: 'x = 4' },
-                { text: 'Решите уравнение: 3x - 5 = 16', answer: 'x = 7' },
-                { text: 'Решите: (x + 3) × 2 = 14', answer: 'x = 4' },
-                { text: 'Решите: x/5 + 3 = 8', answer: 'x = 25' }
-            ],
-            control: [
-                { text: '1. Решите уравнение: 2x + 3(x - 1) = 16', answer: 'x = 3,8' },
-                { text: '2. Решите уравнение: (x + 5)/2 = 12', answer: 'x = 19' },
-                { text: '3. Составьте уравнение: Задумали число, прибавили 15, получили 40. Какое число?', answer: 'x + 15 = 40, x = 25' },
-                { text: '4. Решите: 5(x - 2) = 3x + 8', answer: 'x = 9' }
-            ]
-        },
-        'проценты': {
-            test: [
-                { text: 'Найдите 10% от 200', answer: '20', options: ['20', '10', '200', '2'] },
-                { text: 'Сколько процентов составляет 15 от 75?', answer: '20%', options: ['20%', '15%', '25%', '10%'] },
-                { text: 'Найдите 25% от 80', answer: '20', options: ['20', '25', '15', '30'] },
-                { text: 'Число 40 составляет 20% от какого-то числа. Найдите это число.', answer: '200', options: ['200', '400', '100', '50'] },
-                { text: 'Найдите 50% от 180', answer: '90', options: ['90', '50', '130', '360'] }
-            ],
-            independent: [
-                { text: 'Найдите 15% от 300', answer: '45' },
-                { text: 'Цена товара 500 руб. Скидка 20%. Сколько стоит со скидкой?', answer: '400 руб.' },
-                { text: 'В классе 25 учеников. 60% из них - девочки. Сколько девочек?', answer: '15 девочек' }
-            ],
-            control: [
-                { text: '1. Вклад в банке 10000 руб. под 12% годовых. Сколько будет через год?', answer: '11200 руб.' },
-                { text: '2. Цена товара повысилась с 800 до 960 руб. На сколько % повысилась?', answer: '20%' },
-                { text: '3. В школе 800 учеников. 75% занимаются спортом. Сколько спортсменов?', answer: '600 учеников' }
-            ]
-        },
-        'площадь и периметр': {
-            test: [
-                { text: 'Найдите площадь прямоугольника со сторонами 5 см и 8 см', answer: '40 см²', options: ['40 см²', '26 см²', '13 см²', '80 см²'] },
-                { text: 'Найдите периметр квадрата со стороной 7 см', answer: '28 см', options: ['28 см', '14 см', '49 см', '21 см'] },
-                { text: 'Длина прямоугольника 12 см, ширина 5 см. Найдите площадь.', answer: '60 см²', options: ['60 см²', '17 см²', '34 см²', '120 см²'] },
-                { text: 'Периметр прямоугольника 20 см, длина 7 см. Найдите ширину.', answer: '3 см', options: ['3 см', '6 см', '13 см', '10 см'] }
-            ],
-            independent: [
-                { text: 'Найдите площадь квадрата со стороной 9 см', answer: '81 см²' },
-                { text: 'Периметр прямоугольника 30 см, ширина 5 см. Найдите длину.', answer: '10 см' },
-                { text: 'Найдите площадь треугольника с основанием 10 см и высотой 6 см.', answer: '30 см²' }
-            ],
-            control: [
-                { text: '1. Найдите площадь круга с радиусом 5 см (π ≈ 3,14)', answer: '78,5 см²' },
-                { text: '2. Площадь прямоугольника 72 см², ширина 8 см. Найдите периметр.', answer: '34 см' },
-                { text: '3. Найдите площадь фигуры: прямоугольник 10×6 см + полукруг r=3 см', answer: '≈74,13 см²' }
-            ]
-        },
-        'default': {
-            test: [
-                { text: 'Выполните задание 1', answer: 'Ответ А', options: ['А', 'Б', 'В', 'Г'] },
-                { text: 'Выполните задание 2', answer: 'Ответ Б', options: ['А', 'Б', 'В', 'Г'] }
-            ],
-            independent: [{ text: 'Выполните упражнения по теме', answer: 'Проверьте' }],
-            control: [{ text: 'Выполните все задания', answer: 'Оценивается' }]
-        }
-    },
-    'Русский язык': {
-        'причастие': {
-            test: [
-                { text: 'Найдите причастие в предложении: "Машина, остановленная водителем, стояла у дома."', answer: 'остановленная', options: ['остановленная', 'стояла', 'машина', 'домой'] },
-                { text: 'Какое причастие образовано от глагола "читать"?', answer: 'читающий', options: ['читающий', 'прочитавший', 'читаемый', 'прочитан'] },
-                { text: 'Определите вид причастия: "бегущий"', answer: 'настоящее действительное', options: ['настоящее действительное', 'прошедшее действительное', 'настоящее страдательное'] },
-                { text: 'Найдите страдательное причастие:', answer: 'прочитанная', options: ['прочитанная', 'читающий', 'читавший', 'читающий'] }
-            ],
-            independent: [
-                { text: 'Выпишите из текста все причастия, укажите их вид.', answer: 'Проверьте по учебнику' },
-                { text: 'Образуйте причастия от глагола "строить".', answer: 'строящий, строивший, строимый, построенный' },
-                { text: 'Составьте 3 предложения с причастными оборотами.', answer: 'Проверяется учителем' }
-            ],
-            control: [
-                { text: '1. Спишите текст, раскрывая скобки. Подчеркните причастия.', answer: 'Проверка' },
-                { text: '2. Выполните морфологический разбор причастия: "написанная"', answer: 'прич., страд., прош., ж.р., ед.ч., И.п.' },
-                { text: '3. Составьте текст (5-6 предложений) с причастными оборотами.', answer: 'Творческое задание' }
-            ]
-        },
-        'деепричастие': {
-            test: [
-                { text: 'Найдите деепричастие:', answer: 'читая', options: ['читая', 'читающий', 'прочитал', 'читаемый'] },
-                { text: 'Какой вид у деепричастия "пройдя"?', answer: 'совершенный', options: ['совершенный', 'несовершенный', 'неопределённый'] },
-                { text: 'Деепричастный оборот выделяется:', answer: 'запятыми', options: ['запятыми', 'скобками', 'тире', 'двоеточием'] }
-            ],
-            independent: [
-                { text: 'Расставьте знаки препинания: "Он шёл улыбаясь".', answer: 'Он шёл, улыбаясь.' },
-                { text: 'Образуйте деепричастия от глагола "говорить".', answer: 'говоря, сказав' }
-            ],
-            control: [
-                { text: '1. Спишите, расставляя знаки. Объясните постановку запятых.', answer: 'Проверка' },
-                { text: '2. Составьте текст с деепричастными оборотами.', answer: 'Творческое задание' }
-            ]
-        },
-        'имя существительное': {
-            test: [
-                { text: 'Какое склонение у существительного "река"?', answer: '1-е склонение', options: ['1-е склонение', '2-е склонение', '3-е склонение'] },
-                { text: 'Определите падеж: "в школе"', answer: 'предложный', options: ['предложный', 'родительный', 'дательный', 'винительный'] },
-                { text: 'Какое существительное 3-го склонения?', answer: 'дочь', options: ['дочь', 'дом', 'окно', 'гора'] }
-            ],
-            independent: [
-                { text: 'Просклоняйте существительное "гора".', answer: 'гора - горы - горе - гору - горой - о горе' },
-                { text: 'Образуйте форму Р.п. мн.ч.: окно, дерево, брат.', answer: 'окон, деревьев, братьев' }
-            ],
-            control: [
-                { text: '1. Выполните морфологический разбор существительного "в лесу".', answer: 'лесу - сущ., м.р., 2-е скл., П.п.' },
-                { text: '2. Составьте 5 предложений с существительными разных склонений.', answer: 'Творческое задание' }
-            ]
-        },
-        'глагол': {
-            test: [
-                { text: 'Какое спряжение у глагола "читать"?', answer: '1 спряжение', options: ['1 спряжение', '2 спряжение'] },
-                { text: 'Образуйте форму 2-го лица мн.ч.: "читать"', answer: 'читаете', options: ['читаете', 'читаешь', 'читают', 'читай'] },
-                { text: 'Глагол "написать" - это вид:', answer: 'совершенный', options: ['совершенный', 'несовершенный'] }
-            ],
-            independent: [
-                { text: 'Выпишите глаголы совершенного вида: читать, написать, говорить, сказать.', answer: 'написать, сказать' },
-                { text: 'Образуйте повелительное наклонение: "читать".', answer: 'читай(те)' }
-            ],
-            control: [
-                { text: '1. Выполните морфологический разбор глагола "прочитаю".', answer: 'глаг., сов.в., 1-е спр., буд.в., 1-е л., ед.ч.' },
-                { text: '2. Составьте текст с глаголами разных наклонений.', answer: 'Творческое задание' }
-            ]
-        },
-        'default': {
-            test: [
-                { text: 'Выполните задание по теме', answer: 'Проверьте', options: ['А', 'Б', 'В', 'Г'] },
-                { text: 'Дайте правильный ответ', answer: 'Вариант Б', options: ['А', 'Б', 'В', 'Г'] }
-            ],
-            independent: [{ text: 'Выполните упражнение', answer: 'Проверка' }],
-            control: [{ text: 'Выполните все задания', answer: 'Оценивается' }]
-        }
-    },
-    'Алгебра': {
-        'квадратные уравнения': {
-            test: [
-                { text: 'Решите уравнение: x² - 5x + 6 = 0', answer: 'x = 2 или x = 3', options: ['x = 2 или x = 3', 'x = 1 или x = 6', 'нет решений', 'x = -2 или x = -3'] },
-                { text: 'Найдите дискриминант: x² + 4x + 3 = 0', answer: 'D = 4', options: ['D = 4', 'D = 16', 'D = 8', 'D = 2'] },
-                { text: 'Решите: x² = 16', answer: 'x = 4 или x = -4', options: ['x = 4 или x = -4', 'x = 4', 'x = -4', 'нет решений'] }
-            ],
-            independent: [
-                { text: 'Решите уравнение: x² - 9 = 0', answer: 'x = 3 или x = -3' },
-                { text: 'Решите уравнение: x² + 6x + 9 = 0', answer: 'x = -3' },
-                { text: 'Найдите корни: x² - 4x + 4 = 0', answer: 'x = 2' }
-            ],
-            control: [
-                { text: '1. Решите уравнение: 2x² - 5x + 2 = 0', answer: 'x = 2 или x = 0,5' },
-                { text: '2. Составьте квадратное уравнение с корнями 2 и 3', answer: 'x² - 5x + 6 = 0' },
-                { text: '3. Решите: x² + 2x - 8 = 0', answer: 'x = 2 или x = -4' }
-            ]
-        },
-        'функции': {
-            test: [
-                { text: 'Найдите значение функции y = 2x + 1 при x = 3', answer: 'y = 7', options: ['y = 7', 'y = 6', 'y = 8', 'y = 5'] },
-                { text: 'Что является графиком функции y = kx + b?', answer: 'прямая', options: ['прямая', 'парабола', 'гипербола', 'окружность'] },
-                { text: 'Найдите точку пересечения y = x и y = 2x - 3', answer: '(3, 3)', options: ['(3, 3)', '(1, 1)', '(2, 2)', '(0, 0)'] }
-            ],
-            independent: [
-                { text: 'Постройте график y = x + 2. Найдите y при x = 4.', answer: 'y = 6' },
-                { text: 'Найдите нули функции y = 2x - 6', answer: 'x = 3' }
-            ],
-            control: [
-                { text: '1. Найдите точку пересечения графиков y = 2x и y = x + 3', answer: '(3, 6)' },
-                { text: '2. Постройте графики и найдите точки пересечения', answer: 'Проверка' }
-            ]
-        },
-        'default': {
-            test: [{ text: 'Выполните задание', answer: 'Ответ', options: ['А', 'Б', 'В', 'Г'] }],
-            independent: [{ text: 'Решите задачи', answer: 'Проверка' }],
-            control: [{ text: 'Решите все задания', answer: 'Оценивается' }]
-        }
-    },
-    'Геометрия': {
-        'треугольник': {
-            test: [
-                { text: 'Чему равна сумма углов треугольника?', answer: '180°', options: ['180°', '360°', '90°', '270°'] },
-                { text: 'Стороны треугольника 3, 4, 5. Какой это треугольник?', answer: 'прямоугольный', options: ['прямоугольный', 'остроугольный', 'тупоугольный', 'равнобедренный'] },
-                { text: 'Площадь треугольника 20 см², высота 5 см. Найдите основание.', answer: '8 см', options: ['8 см', '4 см', '10 см', '25 см'] }
-            ],
-            independent: [
-                { text: 'Найдите третий угол треугольника: 45° и 55°', answer: '80°' },
-                { text: 'Постройте треугольник со сторонами 3, 4, 5 см.', answer: 'Проверка построения' }
-            ],
-            control: [
-                { text: '1. Докажите, что треугольник со сторонами 5, 12, 13 - прямоугольный.', answer: '5² + 12² = 13²' },
-                { text: '2. Найдите площадь равнобедренного треугольника с основанием 8 см и высотой 5 см.', answer: '20 см²' }
-            ]
-        },
-        'площадь': {
-            test: [
-                { text: 'Площадь квадрата 64 см². Чему равна сторона?', answer: '8 см', options: ['8 см', '6 см', '7 см', '9 см'] },
-                { text: 'Найдите площадь круга r = 3 см (π ≈ 3,14)', answer: '≈28,26 см²', options: ['≈28,26 см²', '≈9,42 см²', '≈18,84 см²', '≈37,68 см²'] }
-            ],
-            independent: [
-                { text: 'Найдите площадь треугольника с основанием 10 см и высотой 6 см.', answer: '30 см²' }
-            ],
-            control: [
-                { text: 'Найдите площадь фигуры: прямоугольник 10×6 см + полукруг r=3 см', answer: '≈74,13 см²' }
-            ]
-        },
-        'default': {
-            test: [{ text: 'Решите задачу', answer: 'Ответ', options: ['А', 'Б', 'В', 'Г'] }],
-            independent: [{ text: 'Выполните построения', answer: 'Проверка' }],
-            control: [{ text: 'Решите задачи', answer: 'Оценивается' }]
-        }
-    },
-    'Физика': {
-        'скорость': {
-            test: [
-                { text: 'Переведите 72 км/ч в м/с', answer: '20 м/с', options: ['20 м/с', '25 м/с', '15 м/с', '30 м/с'] },
-                { text: 'Автомобиль едет со скоростью 60 км/ч. Какое расстояние за 2 часа?', answer: '120 км', options: ['120 км', '30 км', '180 км', '60 км'] },
-                { text: 'Скорость света ≈ 300 000 км/с. За 1 секунду она пройдёт:', answer: '300 000 км', options: ['300 000 км', '3 000 км', '30 000 км', '3 000 000 км'] }
-            ],
-            independent: [
-                { text: 'Расстояние между городами 240 км. Скорость 80 км/ч. Время в пути?', answer: '3 часа' }
-            ],
-            control: [
-                { text: '1. Расстояние 120 км, скорость 60 км/ч. На обратный путь скорость 40 км/ч. Найдите среднюю скорость.', answer: '48 км/ч' }
-            ]
-        },
-        'сила': {
-            test: [
-                { text: 'Какая единица измерения силы?', answer: 'Ньютон (Н)', options: ['Ньютон (Н)', 'Килограмм (кг)', 'Метр (м)', 'Ватт (Вт)'] },
-                { text: 'F = ma. Если m = 5 кг, a = 2 м/с², то F = ?', answer: '10 Н', options: ['10 Н', '7 Н', '3 Н', '2,5 Н'] },
-                { text: 'Сила тяжести на Земле F = mg. g ≈ ?', answer: '9,8 м/с²', options: ['9,8 м/с²', '10 м/с²', '1 м/с²', '98 м/с²'] }
-            ],
-            independent: [
-                { text: 'Найдите силу, действующую на тело массой 10 кг с ускорением 2 м/с².', answer: '20 Н' }
-            ],
-            control: [
-                { text: '1. На тело массой 5 кг действует сила 20 Н. Найдите ускорение.', answer: '4 м/с²' }
-            ]
-        },
-        'default': {
-            test: [{ text: 'Ответьте на вопрос', answer: 'Ответ', options: ['А', 'Б', 'В', 'Г'] }],
-            independent: [{ text: 'Решите задачу', answer: 'Проверка' }],
-            control: [{ text: 'Решите задачи', answer: 'Оценивается' }]
-        }
-    },
-    'Химия': {
-        'уравнения реакций': {
-            test: [
-                { text: 'Расставьте коэффициенты: Fe + O₂ → Fe₂O₃', answer: '4Fe + 3O₂ → 2Fe₂O₃', options: ['4Fe + 3O₂ → 2Fe₂O₃', 'Fe + O₂ → Fe₂O₃', '2Fe + 3O₂ → 2Fe₂O₃', '4Fe + O₂ → 2Fe₂O₃'] },
-                { text: 'Тип реакции: Fe + O₂ → Fe₂O₃', answer: 'соединения', options: ['соединения', 'разложения', 'замещения', 'обмена'] },
-                { text: 'Расставьте коэффициенты: H₂ + O₂ → H₂O', answer: '2H₂ + O₂ → 2H₂O', options: ['2H₂ + O₂ → 2H₂O', 'H₂ + O₂ → H₂O', '2H₂ + 2O₂ → 2H₂O', 'H₂ + 2O₂ → H₂O'] }
-            ],
-            independent: [
-                { text: 'Расставьте коэффициенты: Al + O₂ → Al₂O₃', answer: '4Al + 3O₂ → 2Al₂O₃' }
-            ],
-            control: [
-                { text: '1. Составьте уравнение реакции горения метана: CH₄ + O₂ → CO₂ + H₂O', answer: 'CH₄ + 2O₂ → CO₂ + 2H₂O' }
-            ]
-        },
-        'default': {
-            test: [{ text: 'Ответьте на вопрос', answer: 'Ответ', options: ['А', 'Б', 'В', 'Г'] }],
-            independent: [{ text: 'Выполните задание', answer: 'Проверка' }],
-            control: [{ text: 'Решите задачи', answer: 'Оценивается' }]
-        }
-    },
-    'Биология': {
-        'клетка': {
-            test: [
-                { text: 'Какая органелла - "энергетическая станция" клетки?', answer: 'Митохондрия', options: ['Митохондрия', 'Рибосома', 'Ядро', 'Вакуоль'] },
-                { text: 'Какие органеллы отвечают за синтез белка?', answer: 'Рибосомы', options: ['Рибосомы', 'Митохондрии', 'Лизосомы', 'Вакуоли'] },
-                { text: 'Что содержит ядро клетки?', answer: 'Генетический материал (ДНК)', options: ['Генетический материал (ДНК)', 'Рибосомы', 'Митохондрии', 'Воду'] }
-            ],
-            independent: [
-                { text: 'Нарисуйте и подпишите основные органоиды клетки.', answer: 'Проверка по учебнику' }
-            ],
-            control: [
-                { text: '1. Сравните растительную и животную клетки. Составьте таблицу.', answer: 'Таблица' }
-            ]
-        },
-        'default': {
-            test: [{ text: 'Ответьте на вопрос', answer: 'Ответ', options: ['А', 'Б', 'В', 'Г'] }],
-            independent: [{ text: 'Выполните задание', answer: 'Проверка' }],
-            control: [{ text: 'Решите задачи', answer: 'Оценивается' }]
-        }
-    },
-    'История': {
-        'default': {
-            test: [{ text: 'Дайте краткий ответ', answer: 'Ответ', options: ['А', 'Б', 'В', 'Г'] }],
-            independent: [{ text: 'Подготовьте развёрнутый ответ', answer: 'Проверка' }],
-            control: [{ text: 'Напишите развёрнутый ответ', answer: 'Оценивается' }]
-        }
-    }
-};
-
-// ==================== ФУНКЦИИ ГЕНЕРАЦИИ ====================
-
-// Найти задания по теме
-function findTasksForTopic(subject, topic, type) {
-    const subjectData = taskDatabase[subject] || taskDatabase['default'] || taskDatabase['Математика'];
-    const topicLower = topic.toLowerCase();
-    
-    // Ищем точное совпадение или частичное
-    for (const [key, tasks] of Object.entries(subjectData)) {
-        if (key === 'default') continue;
-        if (topicLower.includes(key) || key.includes(topicLower)) {
-            return tasks[type] || tasks['test'] || tasks['independent'];
-        }
-    }
-    
-    // Ищем по ключевым словам
-    const keywords = topicLower.split(/[\s,.-]+/).filter(k => k.length > 2);
-    for (const keyword of keywords) {
-        for (const [key, tasks] of Object.entries(subjectData)) {
-            if (key === 'default') continue;
-            if (key.includes(keyword)) {
-                return tasks[type] || tasks['test'] || tasks['independent'];
-            }
-        }
-    }
-    
-    // Фоллбек на предмет по умолчанию
-    return subjectData['default']?.[type] || subjectData['test'] || subjectData['independent'];
+/* Основные стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Генерация уникальных заданий без повторений
-function generateUniqueTasks(subject, topic, type, count, variantIndex = 0) {
-    let tasks = findTasksForTopic(subject, topic, type);
-    
-    if (!tasks || tasks.length === 0) {
-        // Используем универсальные задания
-        tasks = generateUniversalTasks(topic, type, count * 2);
-    }
-    
-    // Перемешиваем для разнообразия
-    let shuffled = shuffleArray([...tasks]);
-    
-    // Добавляем salt чтобы варианты отличались
-    if (variantIndex > 0) {
-        // Дополнительное перемешивание для каждого варианта
-        for (let i = 0; i < variantIndex * 3; i++) {
-            shuffled = shuffleArray(shuffled);
-        }
-    }
-    
-    // Дополняем если мало заданий
-    if (shuffled.length < count) {
-        const more = generateUniversalTasks(topic, type, count * 2);
-        shuffled = [...shuffled, ...more];
-        shuffled = shuffleArray(shuffled);
-    }
-    
-    // БЕРЕМ ровно count заданий и не повторяем
-    const result = [];
-    const usedTexts = new Set();
-    
-    for (const task of shuffled) {
-        if (result.length >= count) break;
-        if (!usedTexts.has(task.text)) {
-            result.push(task);
-            usedTexts.add(task.text);
-        }
-    }
-    
-    // Финальное перемешивание
-    return shuffleArray(result);
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
 }
 
-// Генерация универсальных заданий
-function generateUniversalTasks(topic, type, count) {
-    const templates = {
-        test: [
-            { text: `Выполните задание по теме "${topic}"`, answer: 'Проверьте', options: ['А', 'Б', 'В', 'Г'] },
-            { text: `Решите задачу: "${topic}"`, answer: 'Ответ', options: ['10', '15', '20', '25'] },
-            { text: `Вычислите: 125 × 8 =`, answer: '1000', options: ['1000', '800', '100', '10000'] },
-            { text: `Найдите значение выражения по теме "${topic}"`, answer: '25', options: ['25', '30', '35', '20'] },
-            { text: `Выполните вычисления: 96 : 8 =`, answer: '12', options: ['12', '14', '10', '8'] }
-        ],
-        independent: [
-            { text: `Выполните упражнения по теме "${topic}"`, answer: 'Проверьте по учебнику' },
-            { text: `Решите задачу: 6 тетрадей стоят 72 рубля. Сколько стоит 1 тетрадь?`, answer: '12 рублей' },
-            { text: `Вычислите: 24 × 13 =`, answer: '312' },
-            { text: `Выполните задания по теме "${topic}"`, answer: 'Оценивается учителем' },
-            { text: `Решите примеры по теме "${topic}"`, answer: 'Проверка' }
-        ],
-        control: [
-            { text: `1. Выполните задания по теме "${topic}"`, answer: 'Оценивается' },
-            { text: `2. Решите задачи по теме "${topic}"`, answer: 'Проверка' },
-            { text: `3. Выполните контрольные задания`, answer: 'Итоговая оценка' }
-        ]
-    };
-    
-    const typeTemplates = templates[type] || templates['independent'];
-    return shuffleArray([...typeTemplates]).slice(0, count);
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
-// Перемешивание массива (Fisher-Yates)
-function shuffleArray(array) {
-    const arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+/* Header */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Main */
+main {
+    padding: 30px;
+}
+
+/* Form Section */
+.form-section {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+.form-group select:disabled {
+    background: #f0f0f0;
+    cursor: not-allowed;
+}
+
+/* Buttons */
+.btn-generate {
+    width: 100%;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-generate:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    background: #f0f0f0;
+    color: #333;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.btn-secondary:hover {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+/* Output Section */
+.output-section {
+    background: #f8f9fa;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.output-header {
+    background: #fff;
+    padding: 20px 30px;
+    border-bottom: 2px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.output-header h2 {
+    color: #333;
+    font-size: 1.3rem;
+}
+
+.output-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.output-content {
+    padding: 30px;
+    background: white;
+    min-height: 300px;
+    line-height: 1.8;
+}
+
+.output-content:focus {
+    outline: 2px solid #667eea;
+    border-radius: 5px;
+}
+
+/* Generated Content Styles */
+.worksheet {
+    max-width: 100%;
+}
+
+.worksheet-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #333;
+}
+
+.worksheet-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.worksheet-info {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+}
+
+.task-item {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.task-number {
+    font-weight: bold;
+    color: #667eea;
+    margin-right: 10px;
+}
+
+.task-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.task-text-full {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-left: 3px solid #667eea;
+    font-family: 'Georgia', serif;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+/* Test specific styles */
+.test-options {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.test-option {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.test-option input[type="radio"] {
+    margin-right: 10px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.test-option label {
+    cursor: pointer;
+    flex: 1;
+}
+
+/* Answer section for print */
+.answer-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px dashed #ccc;
+    page-break-before: avoid;
+}
+
+.answer-section h3 {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.answer-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.answer-item {
+    padding: 10px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        padding: 0;
     }
-    return arr;
-}
-
-// ==================== СОХРАНЕНИЕ ====================
-let savedWorksheets = JSON.parse(localStorage.getItem('savedWorksheets') || '[]');
-
-// Сохранить текущий вариант
-function saveCurrentWorksheet() {
-    const data = {
-        id: Date.now(),
-        date: new Date().toLocaleDateString('ru-RU'),
-        classLevel: classSelect.value,
-        subject: subjectSelect.value,
-        topic: lessonTopic.value,
-        name: lessonName.value,
-        type: workType.value,
-        taskCount: taskCount.value,
-        variantCount: variantCount.value,
-        content: outputContent.innerHTML,
-        answers: generatedAnswers
-    };
     
-    savedWorksheets.push(data);
-    localStorage.setItem('savedWorksheets', JSON.stringify(savedWorksheets));
-    renderSavedList();
-    alert('✅ Вариант сохранён!');
-}
-
-// Удалить сохранённый вариант
-function deleteSavedWorksheet(id) {
-    if (confirm('Удалить этот вариант?')) {
-        savedWorksheets = savedWorksheets.filter(w => w.id !== id);
-        localStorage.setItem('savedWorksheets', JSON.stringify(savedWorksheets));
-        renderSavedList();
+    .container {
+        box-shadow: none;
+        max-width: 100%;
+    }
+    
+    .form-section,
+    .output-header,
+    footer {
+        display: none;
+    }
+    
+    .output-section {
+        box-shadow: none;
+    }
+    
+    .output-content {
+        padding: 0;
+    }
+    
+    .task-item {
+        break-inside: avoid;
+        border: 1px solid #ddd;
+    }
+    
+    .answer-section {
+        page-break-inside: avoid;
     }
 }
 
-// Загрузить сохранённый вариант
-function loadSavedWorksheet(id) {
-    const worksheet = savedWorksheets.find(w => w.id === id);
-    if (worksheet) {
-        outputContent.innerHTML = worksheet.content;
-        outputSection.style.display = 'block';
-        outputSection.scrollIntoView({ behavior: 'smooth' });
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-btn {
+    padding: 12px 24px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 10px 10px 0 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-btn:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.tab-btn.active {
+    background: white;
+    color: #667eea;
+    border-bottom-color: #667eea;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Saved Section */
+.saved-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.saved-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.saved-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.saved-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.saved-info {
+    flex: 1;
+}
+
+.saved-info strong {
+    color: #333;
+    font-size: 1.05rem;
+}
+
+.saved-info small {
+    color: #888;
+    display: block;
+    margin-top: 5px;
+}
+
+.saved-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.saved-actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.saved-actions button:first-child {
+    background: #667eea;
+    color: white;
+}
+
+.saved-actions button:first-child:hover {
+    background: #5a6fd6;
+}
+
+.saved-actions .delete-btn {
+    background: #ff6b6b;
+    color: white;
+}
+
+.saved-actions .delete-btn:hover {
+    background: #ee5a5a;
+}
+
+.empty-message {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+    font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 25px 15px;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    main {
+        padding: 15px;
+    }
+    
+    .form-section {
+        padding: 20px 15px;
+    }
+    
+    .output-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .output-actions {
+        justify-content: center;
+    }
+    
+    .btn-secondary {
+        margin: 5px;
+    }
+    
+    .worksheet-title {
+        font-size: 1.2rem;
+    }
+    
+    .answer-list {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
-
-// Отрендерить список сохранённых
-function renderSavedList() {
-    const list = document.getElementById('savedList');
-    
-    if (savedWorksheets.length === 0) {
-        list.innerHTML = '<p class="empty-message">У вас пока нет сохранённых вариантов</p>';
-        return;
-    }
-    
-    list.innerHTML = savedWorksheets.map(w => `
-        <div class="saved-item">
-            <div class="saved-info">
-                <strong>${w.subject}</strong> - ${w.topic}<br>
-                <small>${w.date} | ${w.classLevel} класс | ${w.variantCount} вариант(ов)</small>
-            </div>
-            <div class="saved-actions">
-                <button onclick="loadSavedWorksheet(${w.id})">📖 Открыть</button>
-                <button onclick="deleteSavedWorksheet(${w.id})" class="delete-btn">🗑️</button>
-            </div>
-        </div>
-    `).join('');
-}
-
-// ==================== DOM ====================
-const classSelect = document.getElementById('classSelect');
-const subjectSelect = document.getElementById('subjectSelect');
-const lessonTopic = document.getElementById('lessonTopic');
-const lessonName = document.getElementById('lessonName');
-const workType = document.getElementById('workType');
-const taskCount = document.getElementById('taskCount');
-const variantCount = document.getElementById('variantCount');
-const generatorForm = document.getElementById('generatorForm');
-const outputSection = document.getElementById('outputSection');
-const outputContent = document.getElementById('outputContent');
-const editBtn = document.getElementById('editBtn');
-const printBtn = document.getElementById('printBtn');
-const newBtn = document.getElementById('newBtn');
-const saveBtn = document.getElementById('saveBtn');
-
-let generatedAnswers = [];
-
-// Переключение вкладок
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const tabId = this.dataset.tab;
-        
-        // Переключаем кнопки
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Переключаем контент
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        document.getElementById(tabId + '-tab').classList.add('active');
-        
-        // Рендерим сохранённые
-        if (tabId === 'saved') {
-            renderSavedList();
-        }
-    });
-});
-
-// Обновление предметов
-classSelect.addEventListener('change', function() {
-    const classLevel = parseInt(this.value);
-    const subjects = subjectsByClass[classLevel] || [];
-    
-    subjectSelect.innerHTML = '<option value="">Выберите предмет</option>';
-    subjects.forEach(subject => {
-        const option = document.createElement('option');
-        option.value = subject;
-        option.textContent = subject;
-        subjectSelect.appendChild(option);
-    });
-    subjectSelect.disabled = false;
-});
-
-// Генерация
-generatorForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const selectedClass = parseInt(classSelect.value);
-    const subject = subjectSelect.value;
-    const topic = lessonTopic.value;
-    const name = lessonName.value;
-    const type = workType.value;
-    const count = parseInt(taskCount.value);
-    const variants = parseInt(variantCount.value);
-    
-    let html = '';
-    let allAnswers = [];
-    
-    for (let v = 1; v <= variants; v++) {
-        const variantLetter = getVariantLetter(v);
-        const tasks = generateUniqueTasks(subject, topic, type, count, v - 1);
-        
-        html += generateWorksheetHTML(selectedClass, subject, topic, name, type, tasks, v, variantLetter);
-        allAnswers.push({ variant: v, letter: variantLetter, answers: tasks.map(t => t.answer) });
-    }
-    
-    outputContent.innerHTML = html;
-    outputSection.style.display = 'block';
-    generatedAnswers = allAnswers;
-    outputSection.scrollIntoView({ behavior: 'smooth' });
-});
-
-function getVariantLetter(num) {
-    const letters = 'АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯ';
-    return letters[(num - 1) % letters.length];
-}
-
-function generateWorksheetHTML(classLevel, subject, topic, name, type, tasks, variantNum, variantLetter) {
-    const typeNames = {
-        'test': 'Тест',
-        'independent': 'Самостоятельная работа',
-        'control': 'Контрольная работа'
-    };
-    
-    let html = `
-        <div class="worksheet">
-            <div class="worksheet-header">
-                <div class="worksheet-title">${typeNames[type]} - Вариант ${variantLetter}</div>
-                <div class="worksheet-info"><strong>Предмет:</strong> ${subject}</div>
-                <div class="worksheet-info"><strong>Класс:</strong> ${classLevel}</div>
-                <div class="worksheet-info"><strong>Тема:</strong> ${topic}</div>
-                <div class="worksheet-info"><strong>Урок:</strong> ${name}</div>
-                <div class="worksheet-info"><strong>Дата:</strong> ${new Date().toLocaleDateString('ru-RU')}</div>
-            </div>
-            <ul class="task-list">
-    `;
-    
-    tasks.forEach((task, index) => {
-        const cleanText = task.text.replace(/^\d+\.\s*/, '');
-        
-        if (type === 'test' && task.options) {
-            let optionsHTML = task.options.map((opt, i) => `
-                <div class="test-option">
-                    <input type="radio" name="v${variantLetter}_t${index}" id="v${variantLetter}_t${index}_${i}">
-                    <label for="v${variantLetter}_t${index}_${i}">${opt}</label>
-                </div>
-            `).join('');
-            
-            html += `
-                <li class="task-item">
-                    <span class="task-text">${index + 1}. ${cleanText}</span>
-                    ${task.textFull ? `<div class="task-text-full"><em>${task.textFull}</em></div>` : ''}
-                    <div class="test-options">${optionsHTML}</div>
-                </li>
-            `;
-        } else {
-            html += `
-                <li class="task-item">
-                    <span class="task-text">${index + 1}. ${cleanText}</span>
-                    ${task.textFull ? `<div class="task-text-full"><em>${task.textFull}</em></div>` : ''}
-                </li>
-            `;
-        }
-    });
-    
-    html += `
-            </ul>
-            <div class="answer-section">
-                <h3>Ответы - Вариант ${variantLetter} (для учителя)</h3>
-                <ul class="answer-list">
-    `;
-    
-    tasks.forEach((task, index) => {
-        html += `<li class="answer-item">${index + 1}. ${task.answer}</li>`;
-    });
-    
-    html += `
-                </ul>
-            </div>
-        </div>
-    `;
-    
-    return html;
-}
-
-// Кнопки
-let isEditing = false;
-
-editBtn.addEventListener('click', function() {
-    isEditing = !isEditing;
-    outputContent.contentEditable = isEditing;
-    editBtn.textContent = isEditing ? '💾 Сохранить' : '✏️ Редактировать';
-    if (!isEditing) outputContent.blur();
-    else outputContent.focus();
-});
-
-printBtn.addEventListener('click', () => window.print());
-saveBtn.addEventListener('click', saveCurrentWorksheet);
-
-newBtn.addEventListener('click', () => {
-    outputSection.style.display = 'none';
-    generatorForm.reset();
-    subjectSelect.innerHTML = '<option value="">Сначала выберите класс</option>';
-    subjectSelect.disabled = true;
-});
-
-// Инициализация
-renderSavedList();
