@@ -58,6 +58,15 @@ main {
     margin-bottom: 20px;
 }
 
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 8px;
@@ -330,6 +339,129 @@ footer {
     .answer-section {
         page-break-inside: avoid;
     }
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-btn {
+    padding: 12px 24px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 10px 10px 0 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-btn:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.tab-btn.active {
+    background: white;
+    color: #667eea;
+    border-bottom-color: #667eea;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Saved Section */
+.saved-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.saved-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.saved-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.saved-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.saved-info {
+    flex: 1;
+}
+
+.saved-info strong {
+    color: #333;
+    font-size: 1.05rem;
+}
+
+.saved-info small {
+    color: #888;
+    display: block;
+    margin-top: 5px;
+}
+
+.saved-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.saved-actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.saved-actions button:first-child {
+    background: #667eea;
+    color: white;
+}
+
+.saved-actions button:first-child:hover {
+    background: #5a6fd6;
+}
+
+.saved-actions .delete-btn {
+    background: #ff6b6b;
+    color: white;
+}
+
+.saved-actions .delete-btn:hover {
+    background: #ee5a5a;
+}
+
+.empty-message {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+    font-size: 1.1rem;
 }
 
 /* Responsive */
