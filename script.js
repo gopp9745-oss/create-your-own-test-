@@ -321,7 +321,7 @@ function getOperationsForTopic(topic) {
     const topicLower = topic.toLowerCase();
     const operations = [];
     
-    // Проверяем тему на наличие ключевых слов
+    // Проверяем тему на наличие ключевых слов для математических операций
     if (topicLower.includes('умнож') || topicLower.includes('произвед')) {
         operations.push('×');
     }
@@ -335,12 +335,18 @@ function getOperationsForTopic(topic) {
         operations.push('-');
     }
     
-    // Если ничего не найдено - все операции
-    if (operations.length === 0) {
+    // Если найдены конкретные операции - используем их
+    if (operations.length > 0) {
+        return operations;
+    }
+    
+    // Если тема содержит "задач" или "пример" - генерируем все операции
+    if (topicLower.includes('задач') || topicLower.includes('пример') || topicLower.includes('все')) {
         return ['+', '-', '×', ':'];
     }
     
-    return operations;
+    // По умолчанию - все операции
+    return ['+', '-', '×', ':'];
 }
 
 // Генерация универсальных заданий (генерирует уникальные задания с разными числами)
