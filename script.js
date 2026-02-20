@@ -683,7 +683,7 @@ function findTasksForTopic(classLevel, subject, topic, type) {
     return null;
 }
 
-// Генерация уникальных заданий для всех вариантов - без повторений ВООБЩЕ
+// Генерация уникальных заданий для всех вариантов
 function generateUniqueTasksGlobal(classLevel, subject, topic, type, count, variantIndex = 0) {
     let tasks = findTasksForTopic(classLevel, subject, topic, type);
     
@@ -691,35 +691,21 @@ function generateUniqueTasksGlobal(classLevel, subject, topic, type, count, vari
         tasks = generateUniversalTasks(topic, type, count * 10);
     }
     
-    // Перемешиваем
+    // Копируем и перемешиваем
     let shuffled = shuffleArray([...tasks]);
     
-    // Дополнительное перемешивание для разных вариантов
-    if (variantIndex > 0) {
-        for (let i = 0; i < variantIndex * 7; i++) {
-            shuffled = shuffleArray(shuffled);
-        }
+    // Чем больше индекс варианта, тем больше перемешиваний для разнообразия
+    for (let i = 0; i < variantIndex * 10; i++) {
+        shuffled = shuffleArray(shuffled);
     }
     
-    const result = [];
+    // Берём нужное количество заданий
+    const result = shuffled.slice(0, count);
     
-    // Берём задания которые ещё НЕ использовались вообще
-    for (const task of shuffled) {
-        if (result.length >= count) break;
-        if (!globalUsedTasks.has(task.text)) {
-            result.push(task);
-            globalUsedTasks.add(task.text); // Помечаем как использованное
-        }
-    }
-    
-    // Если не хватает заданий - добавляем универсальные (даже если они были использованы ранее)
+    // Если заданий меньше чем нужно - добавляем универсальные
     if (result.length < count) {
         const universal = generateUniversalTasks(topic, type, count - result.length);
-        for (const task of universal) {
-            if (result.length >= count) break;
-            result.push(task);
-            globalUsedTasks.add(task.text);
-        }
+        result.push(...universal.slice(0, count - result.length));
     }
     
     return shuffleArray(result);
@@ -984,9 +970,6 @@ generatorForm.addEventListener('submit', function(e) {
         html += generateWorksheetHTML(selectedClass, subject, topic, section, name, type, tasks, v, variantLetter);
         allAnswers.push({ variant: v, letter: variantLetter, answers: tasks.map(t => t.answer) });
     }
-    
-    // Сохраняем использованные задания в localStorage
-    saveUsedTasks();
     
     outputContent.innerHTML = html;
     outputSection.style.display = 'block';
